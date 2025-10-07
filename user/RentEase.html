@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RentEase</title>
+  <link rel="stylesheet" href="RentEase.css">
+  <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header>
+    <h1>RentEase</h1>
+    <nav>
+      <a href="#">Browse</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#why-choose">Why Choose</a>
+      <a href="#my-bookings">My Bookings</a>
+      <a href="#rental-history">Rental History</a>
+      <a href="#" class="btn">Sign in</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Filters -->
+    <section class="filters">
+      <input type="text" id="search" placeholder="Search listings...">
+      <select id="category">
+        <option value="property">Property</option>
+        <option value="car">Cars</option>
+        <option value="equipment">Equipment</option>
+      </select>
+      <select id="type"></select>
+      <input type="range" id="maxPrice" min="0" max="50000" step="500" value="50000">
+      <span id="priceDisplay">50,000</span>
+      <select id="sort">
+        <option value="default">Sort by</option>
+        <option value="asc">Price: Low to High</option>
+        <option value="desc">Price: High to Low</option>
+      </select>
+      <button id="reset">Reset</button>
+    </section>
+
+    <!-- Listings -->
+    <section>
+      <h2 id="listingTitle">Listings</h2>
+      <div class="listings" id="listings"></div>
+      <div class="loading" id="loading">Loading...</div>
+    </section>
+
+    <!-- How it Works -->
+    <section id="how-it-works" class="how-it-works">
+      <div class="how-left">
+        <h2>Renting Made Simple</h2>
+        <p>
+          At RentEase, renting is as easy as 1, 2, 3.
+          Search, connect, and arrange pick-up or delivery.
+          Rent confidently with RentEase.
+        </p>
+      </div>
+      <div class="how-right">
+        <div class="step">
+          <div class="circle">1</div>
+          <div><strong>Search</strong> - Find what you need from our catalog.</div>
+        </div>
+        <div class="step">
+          <div class="circle">2</div>
+          <div><strong>Connect</strong> - Contact the renter and confirm details.</div>
+        </div>
+        <div class="step">
+          <div class="circle">3</div>
+          <div><strong>Rent</strong> - Secure the rental and arrange handover.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="why-choose" class="why-choose">
+      <h2>Why Choose <span>RentEase</span></h2>
+      <div class="features">
+        <div class="feature-card">
+          <i class="fas fa-th-large icon"></i>
+          <h3>Wide Selection</h3>
+          <p>Choose from a vast range of items across categories.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-tags icon"></i>
+          <h3>Competitive Prices</h3>
+          <p>Rent directly from peers or businesses for the best rates.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-shield-alt icon"></i>
+          <h3>Safe and Secure</h3>
+          <p>Rely on our platform for hassle-free transactions.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-headset icon"></i>
+          <h3>Dedicated Support</h3>
+          <p>Count on our team for help whenever you need it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- My Bookings -->
+    <section id="my-bookings" class="my-bookings">
+      <h2>My Bookings</h2>
+      <div id="bookingsList"></div>
+    </section>
+
+    <!-- Rental History -->
+    <section id="rental-history" class="rental-history">
+      <h2>Rental History</h2>
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Period</th>
+            <th>Status</th>
+            <th>Review</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="historyList"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Item Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <img id="modalImg" src="" alt="">
+      <div class="modal-content">
+        <h2 id="modalTitle"></h2>
+        <p class="location" id="modalLocation"></p>
+        <p class="price" id="modalPrice"></p>
+        <p id="modalDesc"></p>
+        <button class="close" id="closeModal">Close</button>
+        <button class="contact" id="openContact">Contact</button>
+        <button class="book" id="openBooking">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div class="modal" id="contactModal">
+    <div class="modal-box contact-box">
+      <div class="modal-content">
+        <h2>Contact Renter</h2>
+        <textarea placeholder="Write your message..."></textarea>
+        <button class="close" id="closeContact">Cancel</button>
+        <button class="contact" id="sendMsg">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div class="modal" id="bookingModal">
+    <div class="modal-box">
+      <div class="modal-content">
+        <h2>Book Item</h2>
+        <p id="bookingItem"></p>
+        <label>Start Date:</label>
+        <input type="date" id="startDate"><br>
+        <label>End Date:</label>
+        <input type="date" id="endDate"><br>
+        <label>Quantity:</label>
+        <input type="number" id="quantity" min="1" value="1"><br>
+        <button class="close" id="closeBooking">Cancel</button>
+        <button class="contact" id="confirmBooking">Confirm Booking</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal" id="reviewModal">
+    <div class="modal-box">
+      <div class="modal-content">
+        <h2>Leave a Review</h2>
+        <p id="reviewItem"></p>
+        <textarea id="reviewText" placeholder="Write your review..."></textarea>
+        <button class="close" id="closeReview">Cancel</button>
+        <button class="contact" id="submitReview">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <h3>Contact Us</h3>
+      <p>+63 912 345 6789</p>
+      <p>support@rentease.com</p>
+      <p>123, Green Lane, Manila, Philippines</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Our Services</h3>
+      <ul>
+        <li><a href="#">Browse Listings</a></li>
+        <li><a href="#">How It Works</a></li>
+        <li><a href="#">Bookings</a></li>
+        <li><a href="#">Rental History</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#">Knowledge Base</a></li>
+        <li><a href="#">Hire an Expert</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>RentEase</h3>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> RentEase. All Rights Reserved.</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+  <script src="RentEase.js"></script>
+</body>
+</html>

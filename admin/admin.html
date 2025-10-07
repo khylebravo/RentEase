@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RentEase — Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
+  <script defer src="admin.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>RentEase Admin</h1>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-btn active" data-view="overview">Overview</button>
+        <button class="nav-btn" data-view="users">Users</button>
+        <button class="nav-btn" data-view="items">Items</button>
+        <button class="nav-btn" data-view="bookings">Bookings</button>
+        <button class="nav-btn" data-view="history">Rental History</button>
+        <button class="nav-btn" data-view="settings">Settings</button>
+        <button class="nav-btn" data-view="logs">Monitoring</button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <small>Admin: <span id="adminName">admin@rentease</span></small>
+        <button id="logoutBtn" class="link">Log out</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="search-wrap">
+          <input id="globalSearch" placeholder="Quick search users/items/bookings...">
+        </div>
+        <div class="top-actions">
+          <div class="metric">Users: <span id="statUsers">0</span></div>
+          <div class="metric">Items: <span id="statItems">0</span></div>
+          <div class="metric">Bookings: <span id="statBookings">0</span></div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <section class="content">
+        <!-- OVERVIEW -->
+        <section id="view-overview" class="view active">
+          <h2>Platform Overview</h2>
+          <div class="cards">
+            <div class="card stat-card">
+              <h3 id="ov-users">0</h3><p>Total Users</p>
+            </div>
+            <div class="card stat-card">
+              <h3 id="ov-items">0</h3><p>Total Items</p>
+            </div>
+            <div class="card stat-card">
+              <h3 id="ov-bookings">0</h3><p>Active Bookings</p>
+            </div>
+            <div class="card stat-card">
+              <h3 id="ov-revenue">₱0</h3><p>Mock Revenue (est.)</p>
+            </div>
+          </div>
+          <div class="card large-card">
+            <h3>Recent Activity</h3>
+            <ul id="recentActivity" class="activity-list"></ul>
+          </div>
+        </section>
+
+        <!-- USERS -->
+        <section id="view-users" class="view">
+          <div class="view-header">
+            <h2>Manage Users</h2>
+            <button id="addUserBtn" class="btn primary">Add User</button>
+          </div>
+          <div class="card">
+            <input id="usersFilter" placeholder="Filter users by name/email...">
+            <table class="table">
+              <thead>
+                <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="usersTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ITEMS -->
+        <section id="view-items" class="view">
+          <div class="view-header">
+            <h2>Manage Rental Items</h2>
+            <button id="addItemBtn" class="btn primary">Add Item</button>
+          </div>
+          <div class="card">
+            <input id="itemsFilter" placeholder="Filter items by title/category...">
+            <table class="table">
+              <thead>
+                <tr><th>Title</th><th>Category</th><th>Price</th><th>Location</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="itemsTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- BOOKINGS -->
+        <section id="view-bookings" class="view">
+          <div class="view-header">
+            <h2>Bookings</h2>
+            <button id="exportBookingsBtn" class="btn">Export CSV</button>
+          </div>
+          <div class="card">
+            <input id="bookingsFilter" placeholder="Filter bookings by item/user/date...">
+            <table class="table">
+              <thead>
+                <tr><th>Item</th><th>User</th><th>Start</th><th>End</th><th>Qty</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="bookingsTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- RENTAL HISTORY -->
+        <section id="view-history" class="view">
+          <h2>Rental History</h2>
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Status</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody id="historyList"></tbody>
+          </table>
+        </section>
+
+        <!-- SETTINGS -->
+        <section id="view-settings" class="view">
+          <h2>System Settings</h2>
+          <div class="card settings-grid">
+            <label><input type="checkbox" id="setting-maintenance"> Maintenance mode</label>
+            <label><input type="checkbox" id="setting-allow-guest"> Allow guest bookings</label>
+            <label><input type="checkbox" id="setting-email-notifs"> Email notifications (mock)</label>
+            <label><input type="checkbox" id="setting-reviews"> Enable reviews</label>
+            <div class="small-note">Changes are saved to localStorage (mock settings).</div>
+          </div>
+        </section>
+
+        <!-- LOGS -->
+        <section id="view-logs" class="view">
+          <h2>Monitoring / Logs</h2>
+          <div class="card">
+            <h3>Recent Logs</h3>
+            <ul id="logList" class="activity-list"></ul>
+          </div>
+          <div class="card">
+            <h3>Quick Health Check</h3>
+            <div class="health-grid">
+              <div class="health">DB Mock: <span id="health-db">OK</span></div>
+              <div class="health">API Mock: <span id="health-api">OK</span></div>
+              <div class="health">Queue: <span id="health-queue">Idle</span></div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modalOverlay" aria-hidden="true">
+    <div class="modal-card">
+      <h3 id="modalTitleText">Modal</h3>
+      <div id="modalBody"></div>
+      <div class="modal-actions">
+        <button id="modalCancel" class="btn">Cancel</button>
+        <button id="modalSave" class="btn primary">Save</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

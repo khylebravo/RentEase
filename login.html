@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RentEase Login</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video autoplay muted loop id="bg-video">
+    <source src="C:\Users\gence\OneDrive\Desktop\RentEase 3.0\photo and video\1943483-uhd_3840_2160_25fps.mp4" type="video/mp4">
+  </video>
+
+  <div class="container" id="container">
+    
+    <!-- Left Section -->
+    <div class="left">
+      <!-- (Optional Logo) -->
+      <!-- <img src="photo-and-video/rentease-logo.png" alt="RentEase Logo" class="logo"> -->
+      <h1>Welcome To<br><span>RentEase</span></h1>
+      <p>
+        Modernize your rental experience with a secure and user-friendly platform.
+        Accessible for individuals and businesses alike.
+      </p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="right">
+      <div class="forms-wrapper">
+        
+        <!-- Sign In -->
+        <div class="form-container sign-in">
+          <h2>Sign In</h2>
+          <form action="rentease.html" method="get">
+            <input type="email" placeholder="Email Address" required>
+            
+            <div class="password-field">
+              <input type="password" placeholder="Password" required id="signin-password">
+              <i class="fa-solid fa-eye togglePassword" data-target="signin-password"></i>
+            </div>
+            
+            <div class="remember">
+              <input type="checkbox" id="remember">
+              <label for="remember">Remember Me</label>
+            </div>
+
+            <button type="submit" class="btn">Sign in now</button>
+
+            <div class="links">
+              <p><a href="#">Forgot password?</a></p>
+              <p>Don't have an account? <a href="#" id="goSignUp">Sign Up</a></p>
+            </div>
+          </form>
+        </div>
+
+        <!-- Sign Up -->
+        <div class="form-container sign-up">
+          <h2>Sign Up</h2>
+          <form>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            
+            <div class="password-field">
+              <input type="password" placeholder="Password" required id="signup-password">
+              <i class="fa-solid fa-eye togglePassword" data-target="signup-password"></i>
+            </div>
+            
+            <div class="password-field">
+              <input type="password" placeholder="Confirm Password" required id="confirm-password">
+              <i class="fa-solid fa-eye togglePassword" data-target="confirm-password"></i>
+            </div>
+
+            <button class="btn">Sign up now</button>
+
+            <div class="links">
+              <p>Already have an account? <a href="#" id="goSignIn">Sign In</a></p>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Switch forms
+    const goSignUp = document.getElementById("goSignUp");
+    const goSignIn = document.getElementById("goSignIn");
+    const formsWrapper = document.querySelector(".forms-wrapper");
+
+    goSignUp.addEventListener("click", (e) => {
+      e.preventDefault();
+      formsWrapper.classList.add("active");
+    });
+
+    goSignIn.addEventListener("click", (e) => {
+      e.preventDefault();
+      formsWrapper.classList.remove("active");
+    });
+
+    // Toggle password visibility
+    const toggleButtons = document.querySelectorAll(".togglePassword");
+    toggleButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const input = document.getElementById(btn.dataset.target);
+        input.type = input.type === "password" ? "text" : "password";
+        btn.classList.toggle("fa-eye-slash");
+      });
+    });
+  </script>
+
+</body>
+</html>
